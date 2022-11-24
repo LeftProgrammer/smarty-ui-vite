@@ -9,39 +9,37 @@ import vueJsx from "@vitejs/plugin-vue-jsx";
 import Unocss from "./config/unocss";
 
 const rollupOptions = {
-    external: ["vue", "vue-router"],
-    output: {
-      assetFileNames: `assets/[name].css`
-      // globals: {
-      //   vue: "Vue",
-      // },
-    },
-  };
+  external: ["vue", "vue-router"],
+  output: {
+    assetFileNames: `assets/[name].css`,
+    // globals: {
+    //   vue: "Vue",
+    // },
+  },
+};
 
 export default defineConfig({
-    plugins: [
-        vue(),
-        vueJsx({}),
-        Unocss()
-    ],
-    test: {
-      globals: true,
-      environment: 'happy-dom',
-      transformMode: {
-        web: [/.[tj]sx$/]
-      }
+  plugins: [vue(), vueJsx({}), Unocss()],
+  test: {
+    globals: true,
+    environment: "happy-dom",
+    transformMode: {
+      web: [/.[tj]sx$/],
     },
+  },
 
-    build: {
-        rollupOptions,
-        minify:false,
-        lib: {
-          entry: "./src/entry.ts",
-          name: "SmartyUI",
-          fileName: "smarty-ui",
-          // 导出模块格式
-          formats: ["esm", "umd","iife"],
-        },
-        cssCodeSplit: true
-      },
+  build: {
+    rollupOptions,
+    minify: "terser",
+    sourcemap: true,
+    reportCompressedSize: true,
+    cssCodeSplit: true,
+    lib: {
+      entry: "./src/entry.ts",
+      name: "SmartyUI",
+      fileName: "smarty-ui",
+      // 导出模块格式
+      formats: ["esm", "umd", "iife"],
+    },
+  },
 });
